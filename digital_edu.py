@@ -48,3 +48,31 @@ df['education_status'].fillna(0)
 # Удаление строк с оставшимися пропущенными значениями
 df.dropna(inplace=True)
 print(df.info())
+
+
+
+
+
+X = df.drop('result', axis = 1)
+y = df['result']
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.25)
+
+
+sc = StandardScaler()
+X_train = sc.fit_transform(X_train)
+X_test = sc.transform(X_test)
+
+
+
+classifier = KNeighborsClassifier(n_neighbors = 5)
+classifier.fit(X_train, y_train)
+
+
+y_pred = classifier.predict(X_test)
+
+print('Процент правильно предсказанных исходов:', accuracy_score(y_test, y_pred) * 100)
+
+
+
+
